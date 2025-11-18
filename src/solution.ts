@@ -47,27 +47,11 @@ function filterByRating(items: { title: string; rating: number }[]): {
   return items.filter(item => item.rating >= 4);
 }
 
-// const books = [
-//   { title: 'Book A', rating: 4.5 },
-//   { title: 'Book B', rating: 3.2 },
-//   { title: 'Book C', rating: 5.0 },
-// ];
-
-// console.log(filterByRating(books));
-
 function filterActiveUsers(
   users: { name: string; email: string; isActive: boolean }[]
 ): { name: string; email: string; isActive: boolean }[] {
   return users.filter(user => user.isActive === true);
 }
-
-// const users = [
-//   { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
-//   { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
-//   { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
-// ];
-
-// console.log(filterActiveUsers(users));
 
 interface Book {
   title: string;
@@ -85,11 +69,48 @@ function printBookDetails(book: Book): void {
   console.log(`Available: ${availability}`);
 }
 
-const myBook: Book = {
-  title: 'The Great Gatsby',
-  author: 'F. Scott Fitzgerald',
-  publishedYear: 1925,
-  isAvailable: true,
-};
+function getUniqueValues(
+  arr1: (string | number)[],
+  arr2: (string | number)[]
+): (string | number)[] {
+  const result: (string | number)[] = [];
 
-printBookDetails(myBook);
+  for (let i = 0; i < arr1.length; i++) {
+    const value = arr1[i];
+    if (value !== undefined && result.indexOf(value) === -1) {
+      result.push(value);
+    }
+  }
+
+  for (let i = 0; i < arr2.length; i++) {
+    const value = arr2[i];
+    if (value !== undefined && result.indexOf(value) === -1) {
+      result.push(value);
+    }
+  }
+
+  return result;
+}
+
+function calculateTotalPrice(
+  products: {
+    name: string;
+    price: number;
+    quantity: number;
+    discount?: number;
+  }[]
+): number {
+  if (products.length === 0) {
+    return 0;
+  }
+
+  return products.reduce((total, product) => {
+    const ProductPrice = product.price * product.quantity;
+
+    const discount = product.discount
+      ? ProductPrice * (1 - product.discount / 100)
+      : ProductPrice;
+
+    return total + discount;
+  }, 0);
+}
